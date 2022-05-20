@@ -16,7 +16,9 @@ RUN echo "**** install Python ****" && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi
 
 # === TAKEN FROM: https://github.com/aldycool/python3-with-tools/blob/master/Dockerfile ===
+# NOTE: ruamel.yaml is installed directly using alpine package: https://pkgs.alpinelinux.org/package/edge/community/x86_64/py3-ruamel.yaml
 RUN pip3 install requests && \
+    apk add --no-cache py3-ruamel.yaml --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community && \
     apk add curl && \
     rm -r /root/.cache
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
